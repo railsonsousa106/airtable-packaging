@@ -1,0 +1,41 @@
+service: airtable-packaging
+
+frameworkVersion: '2'
+
+custom:
+  bucket: 'airtable-packaging-lists'
+
+provider:
+  name: aws
+  runtime: python3.8
+  stage: ${opt:stage, 'dev'}
+  timeout: 60
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:ListBucket"
+      Resource: "arn:aws:s3:::${self:custom.bucket}"
+    - Effect: "Allow"
+      Action:
+        - "s3:PutObject"
+      Resource: "arn:aws:s3:::${self:custom.bucket}/*"
+    - Effect: "Allow"
+      Action:
+        - "s3:PutObjectAcl"
+      Resource: "arn:aws:s3:::${self:custom.bucket}/*"
+  environment:
+    AIRTABLE_APP_ID: 'appPmCT4IhPdAZarT'
+    AIRTABLE_SECRET_KEY: 'keyM5AjzBY7hhoGcW'
+    BUCKET_NAME: '${self:custom.bucket}'
+
+functions:
+  create:
+    handler: handler.create
+    events:
+      - http:
+          path: /create
+          method: POST
+          cors: true
+
+plugins:
+  - serverless-python-requirements
