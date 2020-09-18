@@ -27,4 +27,4 @@ node_modules
 *-lock.json
 
 # Temp files
-.xlsx
+*.xlsx
