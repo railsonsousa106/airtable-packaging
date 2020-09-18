@@ -24,8 +24,8 @@ provider:
         - "s3:PutObjectAcl"
       Resource: "arn:aws:s3:::${self:custom.bucket}/*"
   environment:
-    AIRTABLE_APP_ID: 'appPmCT4IhPdAZarT'
-    AIRTABLE_SECRET_KEY: 'keyM5AjzBY7hhoGcW'
+    AIRTABLE_APP_ID: AIRTABLE_APP_ID
+    AIRTABLE_SECRET_KEY: AIRTABLE_SECRET_KEY
     BUCKET_NAME: '${self:custom.bucket}'
 
 functions:
